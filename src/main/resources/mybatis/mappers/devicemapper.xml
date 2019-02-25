@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.mapper.DeviceMapper">
+	<resultMap type="Device" id="deviceTypeMap">
+		<result property="deviceId" column="device_id"/>
+		<result property="name" column="name"/>
+		<result property="description" column="description"/>
+		<result property="address" column="address"/>
+		<result property="apiAddress" column="api_address"/>
+		<result property="tags" column="tags"/>
+		<result property="location" column="location"/>
+		<result property="longitude" column="longitude"/>
+		<result property="latitude" column="latitude"/>
+		<result property="placement" column="placement"/>
+		<result property="availability" column="availability"/>
+		<result property="userId" column="user_id"/>
+		<association property="sensorList" column="device_id"  select="querySensorByDeviceId"></association>
+	</resultMap>
+	
+	<resultMap type="Sensor" id="SensorTypeMap">
+		<result property="sensorId" column="sensor_id"/>
+		<result property="name" column="name"/>
+		<result property="description" column="description"/>
+		<result property="tag" column="tag"/>
+		<result property="type" column="type"/>
+		<result property="address" column="address"/>
+		<result property="apiAddress" column="api_address"/>
+		<result property="status" column="status"/>
+		<result property="datapoint" column="datapoint"/>
+		<result property="deviceId" column="device_id"/>
+	</resultMap>
+
+
+	<select id="queryDeviceById" parameterType="int" resultMap="deviceTypeMap">
+		SELECT * from  device where device_id = #{deviceId}
+	</select>
+
+
+	<select id="queryDeviceByUserId" parameterType="User" resultMap="deviceTypeMap">
+		SELECT * from  device where user_id = #{userId}
+	</select>
+	
+	<select id="querySensorByDeviceId" parameterType="int" resultMap="SensorTypeMap">
+		SELECT * FROM SENsor where device_id = #{deviceId}
+	</select>
+
+	<delete id="deleteDeviceById" parameterType="int">
+		DELETE FROM device WHERE device_id = #{deviceId}
+	</delete>
+
+	<select id="likeQueryDeviceByName" parameterType="User" resultMap="deviceTypeMap">
+		SELECT * FROM device where user_id = #{userId} and name LIKE #{name}
+	</select>
+	
+	<insert id="insertDevice" parameterType="Device">
+		INSERT INTO DEVICE(availability,description,address,api_address,name,tags,location,placement,longitude,latitude,user_id)
+            VALUES(#{availability},#{description},#{address},#{apiAddress},#{name},#{name},#{location},#{placement},#{longitude},#{latitude},#{userId})
+	</insert>
+	
+	<update id="updateDeviceById" parameterType="Device">
+	UPDATE device set name=#{name},description=#{description},address=#{address},api_address=#{apiAddress},tags=#{tags},
+	location=#{location},longitude=#{longitude},
+	latitude=#{latitude},placement=#{placement},availability=#{availability} where device_id=#{deviceId}
+	</update>
+	
+	
+</mapper>

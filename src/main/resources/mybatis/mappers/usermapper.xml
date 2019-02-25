@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.mapper.UserDaoMapper">
+	<resultMap type="User" id="userTypeMap">
+		<result property="userId" column="user_id"/>
+		<result property="name" column="name"/>
+		<result property="password" column="password"/>
+		<result property="email" column="email"/>
+		<result property="description" column="description"/>
+		<result property="apiKey" column="api_key"/>
+		<result property="activationStatus" column="activation_status"/>
+		<result property="avatar" column="avatar"/>
+		<result property="role" column="role"/>
+	</resultMap>
+
+	
+
+	<select id="selectUserByIdPsw" parameterType="User" resultMap="userTypeMap">
+		SELECT * FROM USER WHERE name=#{name} and password=#{password}
+	</select>
+	
+	<select id="selectUserByName"  parameterType="User" resultMap="userTypeMap">
+		SELECT * FROM USER WHERE name=#{name}
+	</select>
+	
+	<insert id="createUser" parameterType="User">
+			INSERT INTO user(name,password,email,api_key,activation_status,avatar,role)
+		VALUES(#{name},#{password},#{email},#{apiKey},#{activationStatus},#{avatar},#{role})
+	</insert>
+	
+	<update id="updateUserStats" parameterType="User">
+		UPDATE USER SET activation_status = #{activationStatus} WHERE name = #{name} and api_key = #{apiKey}
+	</update>
+	
+	
+	
+	
+	<resultMap type="UserMessage" id="messageTypeMap">
+		<result property="msgId" column="msg_id"/>
+		<result property="receiverId" column="receiver_id"/>
+		<result property="type" column="type"/>
+		<result property="msg" column="msg"/>
+		<result property="sendTime" column="send_time"/>
+		<result property="subject" column="subject"/>
+		<result property="readStatus" column="read_status"/>
+		<association property="senderUser" column="sender_id"  select="com.dao.mapper.UserDaoMapper.selectimgSrc"></association>
+	</resultMap>
+
+	<select id="selectimgSrc" parameterType="int" resultMap="userTypeMap">
+		SELECT * FROM user where user_id = #{userId} 
+	</select>
+	
+	
+	<select id="selectMessageList" parameterType="int" resultMap="messageTypeMap">
+		SELECT * FROM user_message where receiver_id = #{receiverId} ORDER BY  send_time desc
+	</select>
+	
+	<update id="updateMessagestatus" parameterType="int">
+	UPDATE user_message set read_status=1 WHERE receiver_id = #{userId}
+	</update>
+	
+	<update id="updateUser" parameterType="User">
+		UPDATE USER SET email = #{email},description=#{description},password=#{password} WHERE name = #{name}
+	</update>
+	
+</mapper>

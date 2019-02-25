@@ -1,0 +1,108 @@
+#banner{
+	background:url(../images/banner/explorer.jpg);
+}
+
+#body{
+	width:1000px;
+	margin: 0 auto;
+	position:relative;
+	min-height: 600px;
+}
+
+form.frm_reg .control-group{
+	margin: 30px 0;
+	overflow: hidden;
+	line-height:24px;
+}
+
+form.frm_reg .controls{
+	margin-left:100px;
+}
+
+form.frm_reg .form-actions{
+	line-height:24px;
+}
+
+form.frm_reg label{
+	line-height: 24px;
+	float: left;
+	width:100px;
+	display:block;
+}
+
+form.frm_reg input[type="text"], form.frm_reg input[type="password"], form.frm_reg input[type="email"]{
+	border:2px solid #eee;
+	line-height:20px;
+	padding:2px 4px;
+	height:20px;
+	outline:none;
+	width:210px;
+}
+
+form.frm_reg input[type="text"]:focus, form.frm_reg input[type="password"]:focus, form.frm_reg input[type="email"]:focus{
+	border-color:#007ad5;
+	box-shadow: 0 0 3px #007ad5 inset;
+}
+
+fieldset{
+	border:none;
+}
+
+.side_box{
+	width:300px;
+	position:absolute;
+	right:0;
+	top:20px;
+	line-height:28px;
+	color:#666;
+	background:#f1f1f1;
+	padding:20px;
+}
+#body h2{
+	line-height:40px;
+	color: #0061AB;
+	font-weight: bold;
+	font-size:18px;
+}
+.side_box p{
+	margin:10px 0;
+}
+.side_box a{
+	color:#007ad5;
+}
+
+.row{
+	overflow:hidden;
+	margin:20px auto;
+	color:#666;
+}
+
+.small-form{
+	width:460px;
+}
+.small-form p.info{
+	color:#999;
+}
+.fl{
+	float: left;
+}
+.fr{
+	float:right;
+}
+
+.about p{
+	margin:10px 0;
+	color: #666;
+	line-height:24px
+}
+
+#reg_frmbox{
+	margin-right:340px;
+	padding-top:20px;
+}
+.social-login{
+	margin-left: 24px;
+	}
+.social-login i{
+	font-size: 14px;
+	}

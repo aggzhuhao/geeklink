@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.mapper.ActionMapper">
+	<resultMap type="DeviceAction" id="deviceActionMap">
+		<id column="action_id" property="actionId"/>
+		<result column="name" property="name"/>
+		<result column="type" property="type"/>
+		<result column="type_value" property="typeValue"/>
+		<result column="status" property="status"/>
+		<association property="sensorActionList" column="action_id" select="querySensorAction"></association>
+	</resultMap>
+	
+	<resultMap type="SensorAction" id="sensorActionMap">
+		<id column="sensor_action_id" property="sensorActionId"/>
+		<result column="action_id" property="actionId"/>
+		<result column="message" property="message"/>
+		<result column="sensor_id" property="sensorId"/>
+		<result column="trigger_option" property="triggerOption"/>
+		<result column="trigger_value" property="triggerValue"/>
+	</resultMap>
+	
+	<select id="querySensorAction" parameterType="int" resultMap="sensorActionMap">
+		SELECT * FROM sensor_action where action_id=#{actionId}
+	</select>
+	
+	<select id="queryAllDevicetion" resultMap="deviceActionMap">
+		SELECT * FROM device_action
+	</select>
+	
+	<select id="likeQueryDevice" parameterType="string" resultMap="deviceActionMap">
+		SELECT * FROM device_action where name LIKE #{name}
+	</select>
+	
+	<delete id="deleteDeviceAction" parameterType="int">
+		DELETE FROM device_action where action_id = #{actionId};
+	</delete>
+	
+	<insert id="insertDeviceAction" parameterType="DeviceAction">
+		INSERT INTO device_action(name,type,type_value,status) VALUES(#{name},#{type},#{typeValue},#{status})
+	</insert>
+	
+	<update id="updateSensorAction" parameterType="SensorAction">
+		UPDATE sensor_action SET trigger_option = #{triggerOption},trigger_value = #{triggerValue} ,message = #{message} ,action_id = #{actionId} 
+		where sensor_action_id = #{sensorActionId}
+	</update>
+	
+	<insert id="insertSensorAction" parameterType="SensorAction">
+	INSERT INTO sensor_action(trigger_option,trigger_value,message,action_id,sensor_id)	
+	VALUES(#{triggerOption},#{triggerValue},#{message},#{actionId},#{sensorId})
+	</insert>
+	
+	<delete id="deleteSensorActionById" parameterType="int">
+	delete from sensor_action where sensor_action_id = #{sensorActionId}
+	</delete>
+	<select id="querySensorActionById" parameterType="int" resultMap="sensorActionMap">
+		SELECT * FROM sensor_action where sensor_action_id = #{sensorActionId}
+	</select>
+	
+	<select id="queryDeviceActionById" parameterType="int" resultMap="deviceActionMap">
+		SELECT * FROM device_action where action_id = #{actionId}
+	</select>
+	
+	<update id="updateActionById" parameterType="DeviceAction">
+	update device_action set name=#{name},type=#{type},
+	type_value=#{typeValue},status=#{status} where action_id=#{actionId}
+	</update>
+</mapper>
+
+
+
+
+
